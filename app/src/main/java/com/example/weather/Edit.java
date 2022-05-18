@@ -3,7 +3,6 @@ package com.example.weather;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +20,8 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class Edit extends AppCompatActivity {
 
     private DatabaseAdapter adapter;
@@ -29,13 +30,18 @@ public class Edit extends AppCompatActivity {
     private EditText nameBox;
     private Button delButton;
     private ImageButton locateBTN;
-    String weather_url1 = "",api_key = "0e4b76af20c376f01b357e23eee67be0";
+    String weather_url1 = "",api_key = "";
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        try {
+            api_key = Util.getProperty("api",this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         nameBox = findViewById(R.id.name);
         delButton = findViewById(R.id.deleteButton);

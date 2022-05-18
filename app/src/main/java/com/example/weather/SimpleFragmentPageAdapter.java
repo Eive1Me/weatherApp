@@ -1,46 +1,25 @@
 package com.example.weather;
 
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class SimpleFragmentPageAdapter extends FragmentPagerAdapter {
-    int count;
-    FragmentManager fm;
-    List<Fragment> mFragmentList = new ArrayList<>();
-    List<Integer> TABLE = new ArrayList<>();
+public class SimpleFragmentPageAdapter extends FragmentStateAdapter {
 
-    public SimpleFragmentPageAdapter(
-            FragmentManager fm, int count)
-    {
-        super(fm);
-        this.fm = fm;
-        this.count = count;
+    public SimpleFragmentPageAdapter(FragmentActivity fa) {
+        super(fa);
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        return WeatherFragment.newInstance(MainActivity2.citiesList.get(position).getName());
     }
 
     @Override
-    public Fragment getItem(int position)
-    {
-        System.out.println("IT HAPPENED" + MainActivity2.citiesList.get(position).getName());
-        count = MainActivity2.citiesList.size();
-        Fragment my =WeatherFragment.newInstance(MainActivity2.citiesList.get(position).getName());
-        mFragmentList.add(my);
-        TABLE.add(position);
-        return my;
+    public int getItemCount() {
+        return MainActivity2.citiesList.size();
     }
-
-    @Override
-    public int getCount()
-    {
-        return count;
-    }
-
 }

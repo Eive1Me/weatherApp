@@ -12,26 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_editor_absoluteY="731dp" >
 
-        </androidx.viewpager.widget.ViewPager>
+        </androidx.viewpager2.widget.ViewPager2>
 
         <ImageButton
             android:id="@+id/menuBtn2"
             style="@android:style/Widget.Holo.Light.ImageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:scaleX="2"
-            android:scaleY="2"
+            android:foreground="@drawable/ic_visualeditor_icon_menu"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_visualeditor_icon_menu" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
