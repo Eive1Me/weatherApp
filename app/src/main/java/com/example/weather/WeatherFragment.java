@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -43,10 +44,9 @@ public class WeatherFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String city;
 
-    String api_key = "0e4b76af20c376f01b357e23eee67be0", weather_url1 = "";
+    String api_key = "", weather_url1 = "";
 
     TextView temp_tv,humid_tv,press_tv,location_tv;
-    ImageButton menuBtn;
     ImageView imageView;
 
     public WeatherFragment() {
@@ -65,6 +65,11 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            api_key = Util.getProperty("api",this.requireContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (getArguments() != null) {
             city = getArguments().getString(CITY);
         }
@@ -80,7 +85,6 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        menuBtn = (ImageButton) getView().findViewById(R.id.menuBtn3);
         location_tv = (TextView)  getView().findViewById(R.id.location_tv3);
         temp_tv = (TextView)  getView().findViewById(R.id.temp_tv3);
         humid_tv = (TextView)  getView().findViewById(R.id.humid_tv3);
@@ -119,12 +123,7 @@ public class WeatherFragment extends Fragment {
             }
         }, error -> System.out.println("aaa"));
         queue.add(stringReq);
-        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
-            @Override
-            public void onRequestFinished(Request<Object> request) {
-                setInfo();
-            }
-        });
+        queue.addRequestFinishedListener(request -> setInfo());
     }
 
     void setInfo() {
@@ -144,7 +143,7 @@ public class WeatherFragment extends Fragment {
                 JSONObject main = obj.getJSONObject("main");
                 // set the temperature and the city
                 // name using getString() function
-                String icon = Weather.StringFormatter.reverseString(obj.getJSONArray("weather").getJSONObject(0).getString("icon"));
+                String icon = StringFormatter.reverseString(obj.getJSONArray("weather").getJSONObject(0).getString("icon"));
                 System.out.println(icon);
                 Context context = imageView.getContext();
                 imageView.setImageResource(context.getResources().getIdentifier(icon, "drawable", context.getPackageName()));
@@ -157,5 +156,13 @@ public class WeatherFragment extends Fragment {
             }
         }, error -> System.out.println("That didn't work!"));
         queue.add(stringReq1);
+    }
+
+    public static class StringFormatter {
+        public static String reverseString(String str){
+            StringBuilder sb=new StringBuilder(str);
+            sb.reverse();
+            return sb.toString();
+        }
     }
 }

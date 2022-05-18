@@ -22,8 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
                 + " TEXT);");
 //         добавление начальных данных
-        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
-                + ") VALUES ('Paris'), ('Rome'), ('Brighton');");
+//        db.execSQL("INSERT INTO "+ TABLE +" (" + COLUMN_NAME
+//                + ") VALUES ('Paris'), ('Rome'), ('Brighton');");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) {
